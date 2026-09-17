@@ -1,0 +1,23 @@
+:root {
+  /* Greys */
+  --grey-100: hsl(223deg 14% 90%);
+  --grey-200: hsl(210deg 8% 80%);
+  --grey-300: hsl(220deg 7% 75%);
+  --grey-400: hsl(202deg 5% 67%);
+  --grey-500: hsl(204deg 3% 65%);
+  --grey-600: hsl(223deg 6% 47%);
+  --grey-700: hsl(193deg 6% 28%);
+  --grey-800: hsl(200deg 15% 16%);
+  --grey-900: hsl(225deg 11% 7%);
+
+  /* Reds */
+  --red-100: hsl(0deg 100% 85%);
+  --red-200: hsl(0deg 96% 81%);
+  --red-300: hsl(0deg 80% 73%);
+  --red-400: hsl(0deg 75% 65%);
+  --red-500: hsl(0deg 74% 58%);
+  --red-600: hsl(0deg 69% 49%);
+  --red-700: hsl(0deg 71% 41%);
+  --red-800: hsl(0deg 90% 30%);
+  --red-900: hsl(0deg 94% 25%);
+}

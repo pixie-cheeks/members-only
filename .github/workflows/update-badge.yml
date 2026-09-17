@@ -1,0 +1,34 @@
+name: Update Render Status Badge
+on:
+  # schedule:
+  #   - cron: '*/5 * * * *' # Runs every 5 minutes
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-badge:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Generate Badge & Update README
+        env:
+          RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
+          RENDER_SERVICE_ID: ${{ secrets.RENDER_SERVICE_ID }}
+        run: |
+          sed -Ez -i \
+           "s|(<\!-- RENDER_BADGE_START -->\n).*(\n<\!-- RENDER_BADGE_END -->\n)|\1\n\![Render Status]($(npx render-status-badge-forked | sed 's/&/\\&/'))\2|" README.md
+           
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add README.md
+
+          if git diff --cached --quiet; then
+            echo "Badge unchanged."
+            exit 0
+          fi
+
+          git commit -m "[skip render] Update Render status badge"
+          git push

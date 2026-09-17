@@ -1,0 +1,21 @@
+/* Spacing and general sizing values */
+:root {
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --space-9: 6rem;
+  --space-10: 8rem;
+  --space-11: 12rem;
+  --space-12: 16rem;
+  --space-13: 24rem;
+  --space-14: 32rem;
+  --space-15: 40rem;
+  --space-16: 48rem;
+  --space-17: 60rem;
+  --space-18: 72rem;
+}

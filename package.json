@@ -1,0 +1,152 @@
+{
+  "name": "express-ejs-ts-template",
+  "version": "1.0.0",
+  "private": true,
+  "files": [],
+  "engines": {
+    "node": "^24.20.0"
+  },
+  "scripts": {
+    "build": "tsx ./build-project.ts",
+    "start": "node dist/db/populateDatabase.js create && node dist/app.js",
+    "preview": "tsx src/db/populateDatabase.ts create && tsx src/app.ts",
+    "dev": "tsx --watch .",
+    "watch:css": "postcss ./src/styles/style.css --dir ./src/public/styles --map --watch",
+    "populateDB": "tsx src/db/populateDatabase.ts",
+    "lint:css": "stylelint .",
+    "lint": "eslint",
+    "prepare": "husky",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": "12.4.1",
+      "onFail": "download"
+    }
+  },
+  "packageManager": "pnpm@12.4.1",
+  "type": "module",
+  "prettier": {
+    "singleQuote": true,
+    "plugins": [
+      "@awmottaz/prettier-plugin-void-html",
+      "prettier-plugin-embed",
+      "prettier-plugin-sql"
+    ],
+    "embeddedSqlTags": [
+      "sql"
+    ],
+    "language": "postgresql",
+    "keywordCase": "upper"
+  },
+  "stylelint": {
+    "extends": [
+      "@pixie-cheeks/stylelint-config",
+      "@pixie-cheeks/stylelint-config/bem"
+    ],
+    "ignoreFiles": [
+      "**/*",
+      "!src/styles/**/*.css"
+    ]
+  },
+  "cspell": {
+    "version": "0.2",
+    "language": "en,en-GB,lorem",
+    "allowCompoundWords": true,
+    "enableGlobDot": true,
+    "dictionaries": [
+      "html"
+    ],
+    "words": [
+      "aiven",
+      "aivenv",
+      "awmottaz",
+      "besthyhy",
+      "Bulbasaur",
+      "closedby",
+      "dbname",
+      "ejslint",
+      "esbuild",
+      "Golubev",
+      "ilike",
+      "Oopsie",
+      "pgdatabase",
+      "pghost",
+      "pguser",
+      "psql",
+      "Psyduck",
+      "unrs",
+      "Vecteezy"
+    ],
+    "ignorePaths": [
+      ".env",
+      ".git",
+      ".husky/_",
+      "dist",
+      "node_modules",
+      "pnpm-lock.yaml"
+    ]
+  },
+  "lint-staged": {
+    "*": [
+      "cspell --no-must-find-files",
+      "prettier --write --ignore-unknown"
+    ],
+    "*.ejs": [
+      "ejslint"
+    ],
+    "*.css": [
+      "stylelint"
+    ]
+  },
+  "devDependencies": {
+    "@awmottaz/prettier-plugin-void-html": "2.3.0",
+    "@pixie-cheeks/eslint-config": "21.0.0",
+    "@pixie-cheeks/stylelint-config": "8.0.0",
+    "@types/connect-pg-simple": "7.0.3",
+    "@types/express": "5.0.6",
+    "@types/express-session": "1.19.0",
+    "@types/node": "22.20.2",
+    "@types/passport": "1.0.17",
+    "@types/passport-local": "1.0.38",
+    "@types/pg": "8.23.1",
+    "@types/pg-format": "1.0.5",
+    "@types/postcss-import": "14.0.3",
+    "@types/shelljs": "0.10.0",
+    "cspell": "10.3.1",
+    "cssnano": "9.0.4",
+    "ejs-lint": "2.0.1",
+    "eslint": "10.10.0",
+    "husky": "9.1.7",
+    "jiti": "2.7.0",
+    "lint-staged": "17.5.1",
+    "postcss": "8.5.28",
+    "postcss-cli": "12.0.0",
+    "postcss-import": "17.0.0",
+    "postcss-nested": "8.0.1",
+    "postcss-preset-env": "11.5.3",
+    "prettier": "3.9.6",
+    "prettier-plugin-embed": "0.5.1",
+    "prettier-plugin-sql": "0.20.0",
+    "shelljs": "0.10.0",
+    "stylelint": "17.15.0",
+    "tsx": "4.23.13",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.70.0"
+  },
+  "dependencies": {
+    "bcryptjs": "3.0.3",
+    "connect-pg-simple": "10.0.0",
+    "dotenv": "17.4.2",
+    "ejs": "6.0.1",
+    "express": "5.2.1",
+    "express-ejs-layouts": "2.5.1",
+    "express-session": "1.19.0",
+    "passport": "0.7.0",
+    "passport-local": "1.0.0",
+    "pg": "8.23.0",
+    "pg-format": "1.0.4",
+    "zod": "4.6.5"
+  }
+}

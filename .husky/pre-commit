@@ -1,0 +1,4 @@
+lint-staged
+echo "Checking typescript files"
+tsc --noEmit
+echo "Finished checking typescript files"

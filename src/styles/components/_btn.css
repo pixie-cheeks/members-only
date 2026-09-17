@@ -1,0 +1,7 @@
+.btn {
+  display: block;
+  border: none;
+  text-decoration: none;
+  font-family: inherit;
+  font-size: var(--font-size-4);
+}

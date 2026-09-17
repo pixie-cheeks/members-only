@@ -1,0 +1,15 @@
+echo "Checking for spelling errors..."
+cspell .
+echo "Finished checking for spelling errors!"
+
+echo "Checking for formatting issues..."
+prettier --check --ignore-unknown .
+echo "Finished checking for formatting issues!"
+
+echo "Checking for stylelint issues..."
+stylelint .
+echo "Finished checking for stylelint issues!"
+
+echo "Checking for eslint issues..."
+eslint --max-warnings 0
+echo "Finished checking for eslint issues!"

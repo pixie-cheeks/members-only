@@ -1,8 +1,5 @@
 import { parsedEnvironment } from '../settings/parsedEnvironment.js';
 
-if (parsedEnvironment.DB_ENV === 'dev')
-  throw new Error('Can only use Aiven on production.');
-
 interface GetServiceResponse {
   errors?: [];
   service?: {
@@ -29,69 +26,73 @@ interface GetDatabasesResponse {
   databases: DatabaseResponse[];
 }
 
-const aivenData = {
-  projectName: parsedEnvironment.AIVEN_PROJECT_NAME,
-  serviceName: parsedEnvironment.AIVEN_SERVICE_NAME,
-  databaseName: parsedEnvironment.AIVEN_DB_NAME,
-  token: parsedEnvironment.AIVEN_TOKEN,
-};
+const getConnectionString = async (): Promise<string> => {
+  if (parsedEnvironment.DB_ENV === 'dev')
+    throw new Error('Can only use Aiven on production.');
 
-const getServiceData = async (): Promise<GetServiceResponse> => {
-  const serviceDataRaw = await fetch(
-    `https://api.aiven.io/v1/project/${aivenData.projectName}/service/${aivenData.serviceName}`,
-    {
-      headers: { Authorization: `aivenv1 ${aivenData.token}` },
-    },
-  );
+  const aivenData = {
+    projectName: parsedEnvironment.AIVEN_PROJECT_NAME,
+    serviceName: parsedEnvironment.AIVEN_SERVICE_NAME,
+    databaseName: parsedEnvironment.AIVEN_DB_NAME,
+    token: parsedEnvironment.AIVEN_TOKEN,
+  };
 
-  return (await serviceDataRaw.json()) as GetServiceResponse;
-};
+  const getServiceData = async (): Promise<GetServiceResponse> => {
+    const serviceDataRaw = await fetch(
+      `https://api.aiven.io/v1/project/${aivenData.projectName}/service/${aivenData.serviceName}`,
+      {
+        headers: { Authorization: `aivenv1 ${aivenData.token}` },
+      },
+    );
 
-const createService = async (): Promise<Response> =>
-  fetch('https://api.aiven.io/v1/project/pixie-project/service', {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${aivenData.token}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      service_name: aivenData.serviceName,
-      cloud: 'do-blr',
-      plan: 'free-1-1gb',
-      service_type: 'pg',
-    }),
-  });
+    return (await serviceDataRaw.json()) as GetServiceResponse;
+  };
 
-const getAllDatabases = async (): Promise<DatabaseResponse[]> => {
-  const allDatabasesRaw = await fetch(
-    `https://api.aiven.io/v1/project/${aivenData.projectName}/service/${aivenData.serviceName}/db`,
-    {
-      headers: { Authorization: `aivenv1 ${aivenData.token}` },
-    },
-  );
-
-  const { databases } = (await allDatabasesRaw.json()) as GetDatabasesResponse;
-
-  return databases;
-};
-
-const createDatabase = async (): Promise<void> => {
-  await fetch(
-    `https://api.aiven.io/v1/project/${aivenData.projectName}/service/${aivenData.serviceName}/db`,
-    {
+  const createService = async (): Promise<Response> =>
+    fetch('https://api.aiven.io/v1/project/pixie-project/service', {
       method: 'POST',
       headers: {
-        Authorization: `aivenv1 ${aivenData.token}`,
+        Authorization: `Bearer ${aivenData.token}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        database: aivenData.databaseName,
+        service_name: aivenData.serviceName,
+        cloud: 'do-blr',
+        plan: 'free-1-1gb',
+        service_type: 'pg',
       }),
-    },
-  );
-};
+    });
 
-const doSetup = async (): Promise<void> => {
+  const getAllDatabases = async (): Promise<DatabaseResponse[]> => {
+    const allDatabasesRaw = await fetch(
+      `https://api.aiven.io/v1/project/${aivenData.projectName}/service/${aivenData.serviceName}/db`,
+      {
+        headers: { Authorization: `aivenv1 ${aivenData.token}` },
+      },
+    );
+
+    const { databases } =
+      (await allDatabasesRaw.json()) as GetDatabasesResponse;
+
+    return databases;
+  };
+
+  const createDatabase = async (): Promise<void> => {
+    await fetch(
+      `https://api.aiven.io/v1/project/${aivenData.projectName}/service/${aivenData.serviceName}/db`,
+      {
+        method: 'POST',
+        headers: {
+          Authorization: `aivenv1 ${aivenData.token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          database: aivenData.databaseName,
+        }),
+      },
+    );
+  };
+
   // Check if service exists
   const { errors } = await getServiceData();
   if (errors) await createService();
@@ -117,18 +118,13 @@ const doSetup = async (): Promise<void> => {
   const databasesInService = await getAllDatabases();
 
   // Make sure the given database exists
-  if (
-    databasesInService.some(
-      (response) => response.database_name === aivenData.databaseName,
-    )
-  )
-    return;
+  const didDatabaseExist = databasesInService.some(
+    (response) => response.database_name === aivenData.databaseName,
+  );
 
-  await createDatabase();
-};
-
-const getConnectionString = async (): Promise<string> => {
-  await doSetup();
+  if (!didDatabaseExist) {
+    await createDatabase();
+  }
 
   const { service } = await getServiceData();
 

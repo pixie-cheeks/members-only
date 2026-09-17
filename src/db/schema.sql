@@ -2,7 +2,7 @@ CREATE TABLE IF NOT EXISTS users (
   id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
   first_name TEXT NOT NULL,
   last_name TEXT NOT NULL,
-  username UNIQUE TEXT NOT NULL,
+  username TEXT UNIQUE NOT NULL,
   password TEXT NOT NULL,
   is_member boolean DEFAULT FALSE,
   is_admin boolean DEFAULT FALSE
@@ -13,5 +13,5 @@ CREATE TABLE IF NOT EXISTS messages (
   title TEXT NOT NULL,
   content TEXT NOT NULL,
   timestamp timestamp NOT NULL,
-  user_id REFERENCES users (id) ON DELETE CASCADE NOT NULL
+  user_id INTEGER REFERENCES users (id) ON DELETE CASCADE NOT NULL
 );

@@ -47,27 +47,20 @@ class BaseModel<RowType extends BaseType> {
 
   async editRowById(
     userId: number,
-    newData: Omit<RowType, 'id'>,
+    newData: Partial<Omit<RowType, 'id'>>,
   ): Promise<RowType | undefined> {
-    const columns = Object.keys(newData);
-    const values = Object.values(newData);
+    const entries = Object.entries(newData);
 
     const { rows } = await this.pool.query<RowType>(
-      format(
-        `
-          UPDATE %I
-          SET
-            (%I)
-          VALUES
-            (%L)
-          WHERE
-            id = $1
-          RETURNING *;
-        `,
-        this.tableName,
-        columns,
-        values,
-      ),
+      /* sql */ `
+        UPDATE ${this.tableName}
+        SET
+          ${entries.map((columnRow) => columnRow.join(' = ')).join(', ')}
+        WHERE
+          id = $1
+        RETURNING
+          *;
+      `,
       [userId],
     );
 

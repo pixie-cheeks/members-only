@@ -1,4 +1,5 @@
 import * as z from 'zod';
+import { parsedEnvironment } from './settings/parsedEnvironment.js';
 
 const errorIsRequired = 'is required';
 
@@ -35,4 +36,14 @@ const userCreationSchema = z
     });
   });
 
-export { userCreationSchema };
+const joinClubSchema = z.object({
+  password: z
+    .string()
+    .trim()
+    .nonempty({ error: `Password ${errorIsRequired}` })
+    .refine((value) => value === parsedEnvironment.JOIN_CLUB_SECRET, {
+      error: 'Incorrect club member password',
+    }),
+});
+
+export { userCreationSchema, joinClubSchema };

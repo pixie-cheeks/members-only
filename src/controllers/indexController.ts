@@ -1,7 +1,8 @@
 import { type NextFunction, type Request, type Response } from 'express';
-import { userCreationSchema } from '../schemas.js';
+import { joinClubSchema, userCreationSchema } from '../schemas.js';
 import { usersModel } from '../models/usersModel.js';
 import { hashPassword } from '../libs/passwordUtilities.js';
+import { UnauthorizedError } from '../errors.js';
 
 const getIndexPage = (_request: Request, response: Response): void => {
   response.render('index', { title: 'Home' });
@@ -46,21 +47,45 @@ const createUser = async (
 
   const { confirm_password, password, ...userData } = parseResult.data;
 
-  const { id: userId } = await usersModel.insertRow({
+  const { id } = await usersModel.insertRow({
     ...userData,
     password: await hashPassword(password),
   });
 
-  request.login(
-    { password, username: userData.username, id: userId },
-    (error) => {
-      if (error) {
-        next(error);
-        return;
-      }
-      response.redirect('/');
-    },
-  );
+  // @ts-expect-error Passport.js adds the rest of the properties
+  request.login({ id }, (error) => {
+    if (error) {
+      next(error);
+      return;
+    }
+    response.redirect('/');
+  });
 };
 
-export { getIndexPage, getSignupPage, createUser };
+const getJoinClub = (_request: Request, response: Response): void => {
+  response.render('join-club', { title: 'Join Club' });
+};
+
+const postJoinClub = async (
+  request: Request,
+  response: Response,
+): Promise<void> => {
+  if (!request.user) {
+    throw new UnauthorizedError('You are not logged in!');
+  }
+
+  const parseResult = joinClubSchema.safeParse(request.body);
+
+  if (!parseResult.success) {
+    response.status(400).render('join-club', {
+      title: 'Join Club',
+      errors: parseResult.error.issues,
+    });
+    return;
+  }
+
+  await usersModel.editRowById(request.user.id, { is_member: true });
+  response.redirect('/');
+};
+
+export { getIndexPage, getSignupPage, createUser, getJoinClub, postJoinClub };

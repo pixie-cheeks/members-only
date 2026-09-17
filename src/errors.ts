@@ -32,13 +32,13 @@ const errorHandler = (
 ): void => {
   console.error(error);
   if (error instanceof CustomError) {
-    response.status(error.statusCode).render('index', {
+    response.status(error.statusCode).render('error', {
       title: `Error ${error.statusCode}`,
       error,
     });
   } else {
     const serverErrorCode = 500;
-    response.status(serverErrorCode).render('index', {
+    response.status(serverErrorCode).render('error', {
       title: `Error ${serverErrorCode}r`,
       error: {
         statusCode: serverErrorCode,

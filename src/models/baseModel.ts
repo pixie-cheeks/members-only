@@ -18,6 +18,56 @@ class BaseModel<RowType extends BaseType> {
     await this.pool.query(format(`DROP TABLE IF EXISTS %I;`, this.tableName));
   }
 
+  async insertRow(data: RowType): Promise<RowType | undefined> {
+    const [columns, values] = Object.entries(data);
+
+    const { rows } = await this.pool.query<RowType>(
+      format(
+        `
+          INSERT INTO %I
+          SET
+            (%I)
+          VALUES
+            %L
+          RETURNING *;
+        `,
+        this.tableName,
+        columns,
+        values,
+      ),
+    );
+
+    return rows.at(0);
+  }
+
+  async editRowById(
+    userId: number,
+    newData: Omit<RowType, 'id'>,
+  ): Promise<RowType | undefined> {
+    const [columns, values] = Object.entries(newData);
+
+    const { rows } = await this.pool.query<RowType>(
+      format(
+        `
+          UPDATE %I
+          SET
+            (%I)
+          VALUES
+            %L
+          WHERE
+            id = $1
+          RETURNING *;
+        `,
+        this.tableName,
+        columns,
+        values,
+      ),
+      [userId],
+    );
+
+    return rows.at(0);
+  }
+
   async getAllRows(): Promise<RowType[]> {
     const { rows } = await this.pool.query<RowType>(
       format(

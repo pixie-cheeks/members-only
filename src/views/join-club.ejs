@@ -1,4 +1,8 @@
 <div style="max-width: 20rem; margin: 0 auto">
+  <% if (locals.currentUser.is_member) { %>
+  <h1>You have already joined the club!</h1>
+  <a href="/">Go back home</a>
+  <% } else { %>
   <h1>Join Club</h1><br>
   <%- include('partials/form-errors') %><br>
   <form action="/join-club" method="POST">
@@ -7,4 +11,5 @@
     <br><button type="submit">Submit</button>
 
   </form>
+  <% } %>
 </div>

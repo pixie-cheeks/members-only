@@ -18,20 +18,18 @@ const errorHandler = (
 ): void => {
   console.error(error);
   if (error instanceof CustomNotFoundError) {
-    response.status(error.statusCode).render('main', {
+    response.status(error.statusCode).render('index', {
       title: `Error ${error.statusCode}`,
       error,
-      componentName: 'error',
     });
   } else {
     const serverErrorCode = 500;
-    response.status(serverErrorCode).render('main', {
+    response.status(serverErrorCode).render('index', {
       title: `Error ${serverErrorCode}r`,
       error: {
         statusCode: serverErrorCode,
         message: 'The server encountered an error.',
       },
-      componentName: 'error',
     });
   }
 };

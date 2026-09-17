@@ -1,7 +1,8 @@
 import { type NextFunction, type Request, type Response } from 'express';
+import * as z from 'zod';
 import { joinClubSchema, userCreationSchema } from '../schemas.js';
 import { usersModel } from '../models/usersModel.js';
-import { hashPassword } from '../libs/passwordUtilities.js';
+import { hashPassword, validatePassword } from '../libs/passwordUtilities.js';
 import { UnauthorizedError } from '../errors.js';
 
 const getIndexPage = (_request: Request, response: Response): void => {
@@ -88,4 +89,92 @@ const postJoinClub = async (
   response.redirect('/');
 };
 
-export { getIndexPage, getSignupPage, createUser, getJoinClub, postJoinClub };
+const loginSchema = z
+  .object({
+    username: z.string().trim().nonempty({ error: 'Username is required.' }),
+    password: z.string().trim().nonempty({ error: 'Password is required.' }),
+  })
+  .superRefine(async ({ username, password }, context) => {
+    if (username === '') return;
+
+    const user = await usersModel.getUserByUsername(username.trim());
+
+    if (!user) {
+      context.addIssue({
+        code: 'custom',
+        message: 'The given username does not exist',
+        path: ['username'],
+      });
+
+      return;
+    }
+
+    if (password === '') return;
+
+    if (!(await validatePassword(password, user.password))) {
+      context.addIssue({
+        code: 'custom',
+        message: 'Incorrect password!',
+        path: ['password'],
+      });
+    }
+  });
+
+const postLoginPage = async (
+  request: Request,
+  response: Response,
+  next: NextFunction,
+): Promise<void> => {
+  const parseResults = await loginSchema.safeParseAsync(request.body);
+
+  if (!parseResults.success) {
+    response.status(400).render('log-in', {
+      title: 'Log In',
+      errors: parseResults.error.issues,
+      givenBody: request.body as object,
+    });
+    return;
+  }
+
+  const user = await usersModel.getUserByUsername(parseResults.data.username);
+
+  if (!user) throw new Error('User is invalid somehow');
+
+  request.login(user, (error) => {
+    if (error) {
+      next(error);
+      return;
+    }
+    response.redirect('/');
+  });
+};
+
+const getLoginPage = (_request: Request, response: Response): void => {
+  console.log(_request.session);
+  response.render('log-in', { title: 'Log In' });
+};
+
+const getLogout = (
+  request: Request,
+  response: Response,
+  next: NextFunction,
+): void => {
+  request.logout((error) => {
+    if (error) {
+      next(error);
+      return;
+    }
+    response.redirect('/');
+  });
+};
+
+export {
+  getIndexPage,
+  getSignupPage,
+  createUser,
+  getJoinClub,
+  postJoinClub,
+  getLoginPage,
+  getLogout,
+  postLoginPage,
+};

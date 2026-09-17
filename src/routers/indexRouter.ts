@@ -1,11 +1,18 @@
-import type { Router as TypeRouter } from 'express';
+import type {
+  // RequestHandler,
+  Router as TypeRouter,
+} from 'express';
 import { Router } from 'express';
+// import passport from 'passport';
 import {
   getIndexPage,
   getSignupPage,
+  getLoginPage,
   createUser,
   getJoinClub,
   postJoinClub,
+  getLogout,
+  postLoginPage,
 } from '../controllers/indexController.js';
 import { CustomNotFoundError } from '../errors.js';
 import { checkAuth, checkUnauth } from '../authMiddleware.js';
@@ -15,6 +22,10 @@ const createIndexRouter = (): TypeRouter => {
 
   indexRouter.post('/join-club', checkAuth, postJoinClub);
   indexRouter.get('/join-club', checkAuth, getJoinClub);
+
+  indexRouter.get('/log-out', checkAuth, getLogout);
+  indexRouter.post('/log-in', checkUnauth, postLoginPage);
+  indexRouter.get('/log-in', checkUnauth, getLoginPage);
 
   indexRouter.post('/sign-up', checkUnauth, createUser);
   indexRouter.get('/sign-up', checkUnauth, getSignupPage);

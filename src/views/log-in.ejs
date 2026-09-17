@@ -1,0 +1,13 @@
+<div style="max-width: 20rem; margin: 0 auto">
+  <h1>Log In</h1><br>
+  <%- include('partials/form-errors') %><br>
+  <form action="/log-in" method="POST">
+    Username: <br><input type="text" name="username"><br><br>
+    Password: <br><input type="password" name="password"><br><br>
+
+    <br><button type="submit">Submit</button>
+
+    <p>Don't have an account? <a href="/sign-up">Sign Up</a></p>
+
+  </form>
+</div>

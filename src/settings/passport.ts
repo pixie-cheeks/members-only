@@ -11,12 +11,12 @@ const strategy = new LocalStrategy(async (username, password, done) => {
     const user = await usersModel.getUserByUsername(username.trim());
 
     if (!user) {
-      done(null, false);
+      done(null, false, { message: "The given user doesn't exist." });
       return;
     }
 
     if (!(await validatePassword(password.trim(), user.password))) {
-      done(null, false);
+      done(null, false, { message: 'Incorrect password!' });
       return;
     }
 

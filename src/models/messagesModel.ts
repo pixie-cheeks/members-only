@@ -61,5 +61,5 @@ class MessageModel extends BaseModel<MessageType> {
   }
 }
 
-export const usersModel = new MessageModel();
+export const messagesModel = new MessageModel();
 export type { MessageType };

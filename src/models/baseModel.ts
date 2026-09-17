@@ -18,18 +18,19 @@ class BaseModel<RowType extends BaseType> {
     await this.pool.query(format(`DROP TABLE IF EXISTS %I;`, this.tableName));
   }
 
-  async insertRow(data: RowType): Promise<RowType | undefined> {
-    const [columns, values] = Object.entries(data);
+  async insertRow(data: Omit<RowType, 'id'>): Promise<RowType> {
+    const columns = Object.keys(data);
+    const values = Object.values(data);
 
     const { rows } = await this.pool.query<RowType>(
       format(
         `
-          INSERT INTO %I
-          SET
-            (%I)
+          INSERT INTO
+            %I (%I)
           VALUES
-            %L
-          RETURNING *;
+            (%L)
+          RETURNING
+            *;
         `,
         this.tableName,
         columns,
@@ -37,14 +38,19 @@ class BaseModel<RowType extends BaseType> {
       ),
     );
 
-    return rows.at(0);
+    const insertedRow = rows.at(0);
+
+    if (!insertedRow) throw new Error('Failed to insert row into table.');
+
+    return insertedRow;
   }
 
   async editRowById(
     userId: number,
     newData: Omit<RowType, 'id'>,
   ): Promise<RowType | undefined> {
-    const [columns, values] = Object.entries(newData);
+    const columns = Object.keys(newData);
+    const values = Object.values(newData);
 
     const { rows } = await this.pool.query<RowType>(
       format(
@@ -53,7 +59,7 @@ class BaseModel<RowType extends BaseType> {
           SET
             (%I)
           VALUES
-            %L
+            (%L)
           WHERE
             id = $1
           RETURNING *;

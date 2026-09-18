@@ -54,6 +54,7 @@ const createUser = async (
     response.status(400).render('sign-up', {
       title: 'Sign Up',
       errors: parseResult.error.issues,
+      givenBody: request.body as object,
     });
     return;
   }
@@ -93,6 +94,7 @@ const postJoinClub = async (
     response.status(400).render('join-club', {
       title: 'Join Club',
       errors: parseResult.error.issues,
+      givenBody: request.body as object,
     });
     return;
   }
@@ -228,6 +230,7 @@ const postBecomeAdmin = async (
     response.status(400).render('become-admin', {
       title: 'Become Admin',
       errors: parseResult.error.issues,
+      givenBody: request.body as object,
     });
     return;
   }

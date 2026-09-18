@@ -1,19 +1,30 @@
 <header class="header">
   <div class="page__container header__container">
-    <nav class="header__nav">
+    <a href="/" aria-label="Home page" class="header__logo-container link">
+      <img src="/images/favicon.svg" alt="Logo for the Message Club" class="header__logo">
+      <span><span class="header__primary-text">Message Club</span></span>
+    </a>
+
+    <button type="button" class="hamburger-menu" id="js-hamburger-menu" aria-label="Toggle navigation menu" aria-expanded="false">
+      <span aria-hidden="true" class="hamburger-menu__stripe"></span>
+      <span aria-hidden="true" class="hamburger-menu__stripe"></span>
+      <span aria-hidden="true" class="hamburger-menu__stripe"></span>
+    </button>
+
+    <nav class="header__nav" id="js-nav-list">
       <ul class="header__list">
         <% if (locals.currentUser) { %>
         <% const {username, is_member, is_admin} = currentUser; %>
         <% if (!is_member) { %>
-        <li class="header__list-item"><a href="/join-club" class="header__nav-link">Join the Club</a></li>
+        <li class="header__list-item"><a href="/join-club" class="header__nav-link link">Join the Club</a></li>
         <% } %>
         <% if (!is_admin) { %>
-        <li class="header__list-item"><a href="/become-admin" class="header__nav-link">Become Admin</a></li>
+        <li class="header__list-item"><a href="/become-admin" class="header__nav-link link">Become Admin</a></li>
         <% } %>
-        <li class="header__list-item"><a href="/log-out" class="header__nav-link">Log Out</a></li>
+        <li class="header__list-item"><a href="/log-out" class="header__nav-link link">Log Out</a></li>
         <% } else { %>
-        <li class="header__list-item"><a href="/sign-up" class="header__nav-link">Sign Up</a></li>
-        <li class="header__list-item"><a href="/log-in" class="header__nav-link">Log In</a></li>
+        <li class="header__list-item"><a href="/sign-up" class="header__nav-link link">Sign Up</a></li>
+        <li class="header__list-item"><a href="/log-in" class="header__nav-link link">Log In</a></li>
         <% } %>
       </ul>
     </nav>

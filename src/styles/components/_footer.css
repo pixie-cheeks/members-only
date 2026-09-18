@@ -1,0 +1,28 @@
+.footer {
+  box-shadow: var(--up-box-shadow-level-1);
+  background-color: var(--header-bg);
+  color: var(--header-fg);
+
+  &__container {
+    display: flex;
+    justify-content: center;
+  }
+
+  &__link {
+    display: flex;
+    gap: var(--space-1);
+    align-items: center;
+    justify-content: center;
+    transition: var(--time-1) ease-in-out color;
+
+    &:hover,
+    &:focus {
+      color: var(--header-fg-1);
+    }
+  }
+
+  &__icon {
+    fill: currentcolor;
+    width: var(--space-5);
+  }
+}

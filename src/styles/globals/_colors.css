@@ -20,4 +20,28 @@
   --red-700: hsl(0deg 71% 41%);
   --red-800: hsl(0deg 90% 30%);
   --red-900: hsl(0deg 94% 25%);
+
+  /* Component Colors */
+
+  --hamburger-stripe-color: var(--grey-800);
+  --header-bg: var(--grey-100)
+    /* --page-bg: var(--grey-100);
+  --page-fg: var(--grey-800);
+  --header-bg: var(--red-600);
+  --header-fg: var(--grey-100);
+  --header-fg-1: var(--grey-200);
+  --hamburger-stripe-color: var(--grey-100);
+  --card-bg: var(--red-600);
+  --card-fg: var(--grey-100);
+  --card-hover-bg: var(--red-700);
+  --card-hover-fg: var(--grey-100);
+  --primary-btn-bg: var(--red-600);
+  --primary-btn-fg: var(--grey-100);
+  --primary-btn-hover-bg: var(--red-700);
+  --form-bg: var(--grey-200);
+  --form-focus-color: var(--red-400);
+  --dialog-bg: var(--grey-100);
+  --secondary-btn-bg: var(--grey-100);
+  --secondary-btn-fg: var(--grey-800);
+  --secondary-btn-hover-bg: var(--grey-200); */;
 }

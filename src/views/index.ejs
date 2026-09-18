@@ -1,31 +1,48 @@
 <% const isAdmin = locals.currentUser?.is_admin %>
 <% const canSee = locals.currentUser?.is_member || isAdmin %>
 
-<% if (locals.currentUser) { %>
-<h1>Hello, <%= currentUser.username %>!</h1>
+<div class="main__header">
+  <% if (locals.currentUser) { %>
+  <h1 class="main__heading">Hello, <%= currentUser.username %>!</h1>
 
-<a href="/message/create">Create a new message!</a>
-<% } else { %>
-<h1>Hello World!</h1>
-<% } %>
+  <a class="btn" href="/message/create">Create a new message!</a>
+  <% } else { %>
+  <h1 class="main__heading">Hello World!</h1>
+  <% } %>
+</div>
 
 <% if (allMessages.length > 0) { %>
-<ul>
-  <% allMessages.forEach(({title, content, creation_time, first_name, last_name, message_id}) => { %>
-  <li>
-    <h2><%= title %></h2>
+<ul class="cards">
+  <% allMessages.forEach(({title, content, creation_time, first_name, last_name, username, message_id}) => { %>
+  <li class="card">
     <% if (canSee) { %>
-    <p>Creation time: <%= new Date(creation_time).toLocaleString()  %></p>
-    <p><%= `${first_name} ${last_name}`  %></p>
+    <div class="card__author">
+      <p><%= username %></p>
+      <p><%= `${first_name} ${last_name}`  %></p>
+    </div>
     <% } %>
-    <p><%= content %></p>
+    <div class="card__content">
+      <% if (canSee) { %>
+      <h2 class="card__title"><%= title %></h2>
+      <p>Creation time: <%=
+      new Intl.DateTimeFormat("en-IN", {
+        dateStyle: "medium",
+        timeStyle: "long",
+        timeZone: "UTC",
+      }).format(new Date())
+    %></p>
+      <% } %>
+      <p><%= content %></p>
+    </div>
 
-    <% if (isAdmin) { %>
-    <form action="/message/delete" method="POST">
-      <input type="hidden" name="message_id" value="<%= message_id %>">
-      <button type="submit">Delete Message</button>
-    </form>
-    <% } %>
+    <div class="card__actions">
+      <% if (isAdmin) { %>
+      <form action="/message/delete" method="POST">
+        <input type="hidden" name="message_id" value="<%= message_id %>">
+        <button type="submit" class="btn card__btn">Delete Message</button>
+      </form>
+      <% } %>
+    </div>
   </li>
 
   <% }) %>

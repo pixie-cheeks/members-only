@@ -1,7 +1,19 @@
 .btn {
   display: block;
+  transition: var(--time-1) ease-in-out;
+  transition-property: background-color;
   border: none;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow-level-1);
+  background-color: var(--primary-btn-bg);
+  padding: var(--space-3);
   text-decoration: none;
+  color: var(--primary-btn-fg);
   font-family: inherit;
   font-size: var(--font-size-4);
+
+  &:hover,
+  &:focus {
+    background-color: var(--primary-btn-hover-bg);
+  }
 }

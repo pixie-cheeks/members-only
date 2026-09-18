@@ -7,16 +7,26 @@
   <title><%- title %></title>
 
   <link rel="icon" type="image/svg+xml" href="/images/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="/styles/style.css">
   <%- style %>
+
+  <script type="module" src="/scripts/hamburgerMenu.js"></script>
   <%- script %>
 </head>
 
 
-<body>
+<body class="page">
   <%- include('partials/header') %>
-  <%- body %>
+  <main class="main page__main">
+    <div class="main__container page__container">
+      <%- body %>
+    </div>
+  </main>
+  <%- include('partials/footer') %>
 </body>
 
 </html>

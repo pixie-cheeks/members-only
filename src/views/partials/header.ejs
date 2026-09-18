@@ -1,0 +1,24 @@
+<header class="header">
+  <div class="page__container header__container">
+    <nav class="header__nav">
+      <ul class="header__list">
+        <% if (locals.currentUser) { %>
+        <% const {username, is_member, is_admin} = currentUser; %>
+        <% if (!is_member) { %>
+        <li class="header__list-item"><a href="/join-club" class="header__nav-link">Join the Club</a></li>
+        <% } %>
+        <% if (!is_admin) { %>
+        <li class="header__list-item"><a href="/become-admin" class="header__nav-link">Become Admin</a></li>
+        <% } %>
+        <li class="header__list-item"><a href="/log-out" class="header__nav-link">Log Out</a></li>
+        <% } else { %>
+        <li class="header__list-item"><a href="/sign-up" class="header__nav-link">Sign Up</a></li>
+        <li class="header__list-item"><a href="/log-in" class="header__nav-link">Log In</a></li>
+        <% } %>
+      </ul>
+    </nav>
+
+
+  </div>
+
+</header>

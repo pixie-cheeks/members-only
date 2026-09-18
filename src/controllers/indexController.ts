@@ -16,7 +16,7 @@ const getIndexPage = async (
   response: Response,
 ): Promise<void> => {
   response.render('index', {
-    title: 'Home',
+    title: 'Message Club',
     allMessages: await messagesModel.getAllMessagesWithUsers(),
   });
 };

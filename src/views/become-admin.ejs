@@ -1,15 +1,20 @@
-<div style="max-width: 20rem; margin: 0 auto">
-  <% if (locals.currentUser.is_admin) { %>
-  <h1>You are already an admin!</h1>
-  <a href="/">Go back home</a>
-  <% } else { %>
-  <h1>Join Club</h1><br>
-  <%- include('partials/form-errors') %><br>
-  <form action="/become-admin" method="POST">
-    Admin Password: <br><input type="password" name="password"><br><br>
-
-    <br><button type="submit">Submit</button>
-
-  </form>
-  <% } %>
+<% if (locals.currentUser.is_admin) { %>
+<div class="banner">
+  <h1 class="banner__message">You are already an admin!</h1>
+  <a href="/" class="btn banner__btn">Go back home</a>
 </div>
+<% } else { %>
+<form action="/become-admin" method="POST" class="form">
+  <%- include('partials/form-errors') %><br>
+  <div class="form__container">
+    <h1 class="form__title">Become Admin</h1><br>
+    <div class="form__field">
+      <label for="password">Secret Admin Password</label>
+      <input type="password" name="password" id="password" class="form__input">
+    </div>
+
+    <button type="submit" class="btn form__btn">Get Promoted</button>
+  </div>
+
+</form>
+<% } %>

@@ -94,7 +94,8 @@ class BaseModel<RowType extends BaseType> {
             id = $1;
         `,
         this.tableName,
-      )[id],
+      ),
+      [id],
     );
     return rows.at(0);
   }
@@ -108,7 +109,8 @@ class BaseModel<RowType extends BaseType> {
             id = $1;
         `,
         this.tableName,
-      )[id],
+      ),
+      [id],
     );
   }
 

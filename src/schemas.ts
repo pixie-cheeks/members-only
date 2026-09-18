@@ -46,6 +46,16 @@ const joinClubSchema = z.object({
     }),
 });
 
+const becomeAdminSchema = z.object({
+  password: z
+    .string()
+    .trim()
+    .nonempty({ error: `Password ${errorIsRequired}` })
+    .refine((value) => value === parsedEnvironment.BECOME_ADMIN_SECRET, {
+      error: 'Incorrect admin password',
+    }),
+});
+
 const messageCreationSchema = z.object({
   title: z
     .string()
@@ -57,4 +67,9 @@ const messageCreationSchema = z.object({
     .nonempty({ error: `Content ${errorIsRequired}` }),
 });
 
-export { userCreationSchema, joinClubSchema, messageCreationSchema };
+export {
+  userCreationSchema,
+  joinClubSchema,
+  messageCreationSchema,
+  becomeAdminSchema,
+};

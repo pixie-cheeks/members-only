@@ -1,6 +1,7 @@
 import { type NextFunction, type Request, type Response } from 'express';
 import * as z from 'zod';
 import {
+  becomeAdminSchema,
   joinClubSchema,
   messageCreationSchema,
   userCreationSchema,
@@ -209,6 +210,44 @@ const postMessageCreate = async (
   response.redirect('/');
 };
 
+const getBecomeAdmin = (_request: Request, response: Response): void => {
+  response.render('become-admin', { title: 'Become Admin' });
+};
+
+const postBecomeAdmin = async (
+  request: Request,
+  response: Response,
+): Promise<void> => {
+  if (!request.user) {
+    throw new UnauthorizedError('You are not logged in!');
+  }
+
+  const parseResult = becomeAdminSchema.safeParse(request.body);
+
+  if (!parseResult.success) {
+    response.status(400).render('become-admin', {
+      title: 'Become Admin',
+      errors: parseResult.error.issues,
+    });
+    return;
+  }
+
+  await usersModel.editRowById(request.user.id, { is_admin: true });
+  response.redirect('/');
+};
+
+const deleteMessage = async (
+  request: Request,
+  response: Response,
+): Promise<void> => {
+  const requestBody = request.body as Record<string, string>;
+  const messageId = Number(requestBody.message_id);
+
+  if (messageId > 0) await messagesModel.deleteRowById(messageId);
+
+  response.redirect('/');
+};
+
 export {
   getIndexPage,
   getSignupPage,
@@ -220,4 +259,7 @@ export {
   postLoginPage,
   getMessageCreate,
   postMessageCreate,
+  getBecomeAdmin,
+  postBecomeAdmin,
+  deleteMessage,
 };

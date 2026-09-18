@@ -15,14 +15,22 @@ import {
   postLoginPage,
   getMessageCreate,
   postMessageCreate,
+  getBecomeAdmin,
+  postBecomeAdmin,
+  deleteMessage,
 } from '../controllers/indexController.js';
 import { CustomNotFoundError } from '../errors.js';
-import { checkAuth, checkUnauth } from '../authMiddleware.js';
+import { checkAdmin, checkAuth, checkUnauth } from '../authMiddleware.js';
 
 const createIndexRouter = (): TypeRouter => {
   const indexRouter = Router();
+  indexRouter.post('/message/delete', checkAdmin, deleteMessage);
+
   indexRouter.post('/message/create', checkAuth, postMessageCreate);
   indexRouter.get('/message/create', checkAuth, getMessageCreate);
+
+  indexRouter.post('/become-admin', checkAuth, postBecomeAdmin);
+  indexRouter.get('/become-admin', checkAuth, getBecomeAdmin);
 
   indexRouter.post('/join-club', checkAuth, postJoinClub);
   indexRouter.get('/join-club', checkAuth, getJoinClub);

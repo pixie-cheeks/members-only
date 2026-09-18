@@ -9,9 +9,10 @@
   "scripts": {
     "build": "tsx ./build-project.ts",
     "start": "node dist/db/populateDatabase.js create && node dist/app.js",
-    "preview": "tsx src/db/populateDatabase.ts create && tsx src/app.ts",
-    "dev": "tsx --watch src/app.ts",
-    "watch:css": "postcss ./src/styles/style.css --dir ./src/public/styles --map --watch",
+    "preview": "pnpm populateDB create && tsx src/app.ts",
+    "build:css": "postcss ./src/styles/style.css --dir ./src/public/styles --map",
+    "dev": "pnpm populateDB create && pnpm build:css && tsx --watch src/app.ts",
+    "watch:css": "pnpm build:css --watch",
     "populateDB": "tsx src/db/populateDatabase.ts",
     "lint:css": "stylelint .",
     "lint": "eslint",

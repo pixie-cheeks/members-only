@@ -1,0 +1,16 @@
+.banner {
+  &__heading {
+    text-align: center;
+    font-size: var(--font-size-8);
+  }
+
+  &__message {
+    text-align: center;
+    font-size: var(--font-size-5);
+  }
+
+  &__btn {
+    margin: var(--space-5) auto 0;
+    max-width: max-content;
+  }
+}

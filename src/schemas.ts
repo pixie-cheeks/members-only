@@ -41,8 +41,15 @@ const joinClubSchema = z.object({
     .string()
     .trim()
     .nonempty({ error: `Password ${errorIsRequired}` })
-    .refine((value) => value === parsedEnvironment.JOIN_CLUB_SECRET, {
-      error: 'Incorrect club member password',
+    .superRefine((password, context) => {
+      if (password === '') return;
+      if (password === parsedEnvironment.JOIN_CLUB_SECRET) return;
+
+      context.addIssue({
+        code: 'custom',
+        message: 'Incorrect club member password',
+        path: ['password'],
+      });
     }),
 });
 
@@ -51,8 +58,15 @@ const becomeAdminSchema = z.object({
     .string()
     .trim()
     .nonempty({ error: `Password ${errorIsRequired}` })
-    .refine((value) => value === parsedEnvironment.BECOME_ADMIN_SECRET, {
-      error: 'Incorrect admin password',
+    .superRefine((password, context) => {
+      if (password === '') return;
+      if (password === parsedEnvironment.BECOME_ADMIN_SECRET) return;
+
+      context.addIssue({
+        code: 'custom',
+        message: 'Incorrect admin password',
+        path: ['password'],
+      });
     }),
 });
 

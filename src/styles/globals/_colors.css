@@ -21,27 +21,47 @@
   --red-800: hsl(0deg 90% 30%);
   --red-900: hsl(0deg 94% 25%);
 
+  /* Blues */
+  --blue-100: hsl(247deg 100% 85%);
+  --blue-200: hsl(247deg 96% 81%);
+  --blue-300: hsl(247deg 80% 73%);
+  --blue-400: hsl(247deg 75% 65%);
+  --blue-500: hsl(247deg 74% 58%);
+  --blue-600: hsl(247deg 69% 49%);
+  --blue-700: hsl(247deg 71% 41%);
+  --blue-800: hsl(247deg 90% 30%);
+  --blue-900: hsl(247deg 94% 25%);
+
+  /* Yellows */
+  --yellow-100: hsl(67deg 100% 85%);
+  --yellow-200: hsl(67deg 96% 81%);
+  --yellow-300: hsl(67deg 80% 73%);
+  --yellow-400: hsl(67deg 75% 65%);
+  --yellow-500: hsl(67deg 74% 58%);
+  --yellow-600: hsl(67deg 69% 49%);
+  --yellow-700: hsl(67deg 71% 41%);
+  --yellow-800: hsl(67deg 90% 30%);
+  --yellow-900: hsl(67deg 94% 25%);
+
   /* Component Colors */
 
-  --hamburger-stripe-color: var(--grey-800);
-  --header-bg: var(--grey-100)
-    /* --page-bg: var(--grey-100);
+  --page-bg: var(--grey-100);
   --page-fg: var(--grey-800);
-  --header-bg: var(--red-600);
+  --header-bg: var(--blue-600);
   --header-fg: var(--grey-100);
   --header-fg-1: var(--grey-200);
   --hamburger-stripe-color: var(--grey-100);
-  --card-bg: var(--red-600);
+  --card-bg: var(--blue-500);
   --card-fg: var(--grey-100);
-  --card-hover-bg: var(--red-700);
-  --card-hover-fg: var(--grey-100);
-  --primary-btn-bg: var(--red-600);
+  --card-btn-bg: var(--red-600);
+  --card-btn-hover-bg: var(--red-800);
+  --primary-btn-bg: var(--blue-600);
   --primary-btn-fg: var(--grey-100);
-  --primary-btn-hover-bg: var(--red-700);
-  --form-bg: var(--grey-200);
-  --form-focus-color: var(--red-400);
+  --primary-btn-hover-bg: var(--blue-700);
+  --form-bg: var(--grey-100);
+  --form-focus-color: var(--blue-400);
   --dialog-bg: var(--grey-100);
   --secondary-btn-bg: var(--grey-100);
   --secondary-btn-fg: var(--grey-800);
-  --secondary-btn-hover-bg: var(--grey-200); */;
+  --secondary-btn-hover-bg: var(--grey-200);
 }

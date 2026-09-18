@@ -13,7 +13,7 @@
 
 <% if (allMessages.length > 0) { %>
 <ul class="cards">
-  <% allMessages.forEach(({title, content, creation_time, first_name, last_name, username, message_id}) => { %>
+  <% allMessages.reverse().forEach(({title, content, creation_time, first_name, last_name, username, message_id}) => { %>
   <li class="card">
     <% if (canSee) { %>
     <div class="card__author">
@@ -30,7 +30,7 @@
           dateStyle: "medium",
           timeStyle: "long",
           timeZone: "UTC",
-        }).format(new Date())
+        }).format(new Date(creation_time))
       %></p>
         <% } %>
         <p class="card__text"><%= content %></p>

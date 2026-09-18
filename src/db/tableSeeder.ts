@@ -1,19 +1,17 @@
+import { BaseModel } from '../models/baseModel.js';
+import { messagesModel } from '../models/messagesModel.js';
+import { usersModel } from '../models/usersModel.js';
+import { pool } from './pool.js';
+
 const delay = (delayInMS: number): Promise<undefined> =>
   new Promise((resolve) => {
     setTimeout(resolve, delayInMS);
   });
 
 const tableOrderArray = [
-  {
-    async deleteAllRows(): Promise<undefined> {
-      await delay(100);
-      console.log('WIP');
-    },
-    async dropTable(): Promise<undefined> {
-      await delay(100);
-      console.log('WIP');
-    },
-  },
+  new BaseModel(pool, 'sessions'),
+  usersModel,
+  messagesModel,
 ];
 
 const resetTables = (): Promise<undefined[]> =>
@@ -28,7 +26,6 @@ const dropTables = async (): Promise<void> => {
 
 const seedTables = async (): Promise<void> => {
   await delay(100);
-  console.log('Will add some seeds later!');
 };
 
 export { resetTables, seedTables, dropTables };

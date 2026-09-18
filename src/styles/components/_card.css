@@ -1,8 +1,7 @@
 .card {
   display: flex;
   gap: var(--space-6);
-  align-items: center;
-  justify-content: space-between;
+  align-items: baseline;
   transition: var(--time-1) ease-in-out;
   transition-property: color, background-color;
   border-radius: var(--border-radius);
@@ -24,6 +23,30 @@
     object-fit: cover;
   }
 
+  &__author {
+    text-align: center;
+    font-size: var(--font-size-2);
+  }
+
+  &__body {
+    flex: 1;
+
+    @media (--for-tablet-portrait-up) {
+      display: flex;
+    }
+  }
+
+  &__name {
+    font-size: var(--font-size-3);
+  }
+
+  &__name,
+  &__username {
+    max-width: 20ch;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
   &__content {
     flex: 1;
   }
@@ -32,6 +55,15 @@
     letter-spacing: var(--letter-spacing-1);
     font-size: var(--font-size-6);
     font-weight: normal;
+  }
+
+  &__subtitle {
+    margin-bottom: var(--space-4);
+    font-size: var(--font-size-1);
+  }
+
+  &__actions {
+    align-self: end;
   }
 
   &__btn {

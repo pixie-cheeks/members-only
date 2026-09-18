@@ -17,31 +17,32 @@
   <li class="card">
     <% if (canSee) { %>
     <div class="card__author">
-      <p><%= username %></p>
-      <p><%= `${first_name} ${last_name}`  %></p>
+      <p class="card__name"><%= `${first_name} ${last_name}`  %></p>
+      <p class="card__username"><%= username %></p>
     </div>
     <% } %>
-    <div class="card__content">
-      <% if (canSee) { %>
-      <h2 class="card__title"><%= title %></h2>
-      <p>Creation time: <%=
-      new Intl.DateTimeFormat("en-IN", {
-        dateStyle: "medium",
-        timeStyle: "long",
-        timeZone: "UTC",
-      }).format(new Date())
-    %></p>
-      <% } %>
-      <p><%= content %></p>
-    </div>
-
-    <div class="card__actions">
-      <% if (isAdmin) { %>
-      <form action="/message/delete" method="POST">
-        <input type="hidden" name="message_id" value="<%= message_id %>">
-        <button type="submit" class="btn card__btn">Delete Message</button>
-      </form>
-      <% } %>
+    <div class="card__body">
+      <div class="card__content">
+        <% if (canSee) { %>
+        <h2 class="card__title"><%= title %></h2>
+        <p class="card__subtitle"><%=
+        new Intl.DateTimeFormat("en-IN", {
+          dateStyle: "medium",
+          timeStyle: "long",
+          timeZone: "UTC",
+        }).format(new Date())
+      %></p>
+        <% } %>
+        <p><%= content %></p>
+      </div>
+      <div class="card__actions">
+        <% if (isAdmin) { %>
+        <form action="/message/delete" method="POST">
+          <input type="hidden" name="message_id" value="<%= message_id %>">
+          <button type="submit" class="btn card__btn">Delete Message</button>
+        </form>
+        <% } %>
+      </div>
     </div>
   </li>
 

@@ -46,4 +46,15 @@ const joinClubSchema = z.object({
     }),
 });
 
-export { userCreationSchema, joinClubSchema };
+const messageCreationSchema = z.object({
+  title: z
+    .string()
+    .trim()
+    .nonempty({ error: `Title ${errorIsRequired}` }),
+  content: z
+    .string()
+    .trim()
+    .nonempty({ error: `Content ${errorIsRequired}` }),
+});
+
+export { userCreationSchema, joinClubSchema, messageCreationSchema };

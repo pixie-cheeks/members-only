@@ -1,0 +1,11 @@
+<div style="max-width: 20rem; margin: 0 auto">
+  <h1>Create Message</h1><br>
+  <%- include('../partials/form-errors') %><br>
+  <form action="/message/create" method="POST">
+    Title: <br><input type="text" name="title"><br><br>
+    Content: <br><textarea name="content"></textarea><br><br>
+
+    <br><button type="submit">Submit</button>
+
+  </form>
+</div>

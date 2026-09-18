@@ -1,9 +1,14 @@
 import { type NextFunction, type Request, type Response } from 'express';
 import * as z from 'zod';
-import { joinClubSchema, userCreationSchema } from '../schemas.js';
+import {
+  joinClubSchema,
+  messageCreationSchema,
+  userCreationSchema,
+} from '../schemas.js';
 import { usersModel } from '../models/usersModel.js';
 import { hashPassword, validatePassword } from '../libs/passwordUtilities.js';
 import { UnauthorizedError } from '../errors.js';
+import { messagesModel } from '../models/messagesModel.js';
 
 const getIndexPage = (_request: Request, response: Response): void => {
   response.render('index', { title: 'Home' });
@@ -150,7 +155,6 @@ const postLoginPage = async (
 };
 
 const getLoginPage = (_request: Request, response: Response): void => {
-  console.log(_request.session);
   response.render('log-in', { title: 'Log In' });
 };
 
@@ -168,6 +172,37 @@ const getLogout = (
   });
 };
 
+const getMessageCreate = (_request: Request, response: Response): void => {
+  response.render('message/create', { title: 'Create Message' });
+};
+
+const postMessageCreate = async (
+  request: Request,
+  response: Response,
+): Promise<void> => {
+  if (!request.user) {
+    throw new UnauthorizedError('You are not logged in!');
+  }
+
+  const parseResults = messageCreationSchema.safeParse(request.body);
+
+  if (!parseResults.success) {
+    response.status(400).render('message/create', {
+      title: 'Create Message',
+      errors: parseResults.error.issues,
+      givenBody: request.body as object,
+    });
+    return;
+  }
+
+  await messagesModel.insertRow({
+    ...parseResults.data,
+    user_id: request.user.id,
+  });
+
+  response.redirect('/');
+};
+
 export {
   getIndexPage,
   getSignupPage,
@@ -177,4 +212,6 @@ export {
   getLoginPage,
   getLogout,
   postLoginPage,
+  getMessageCreate,
+  postMessageCreate,
 };

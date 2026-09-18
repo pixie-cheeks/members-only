@@ -13,17 +13,22 @@ import {
   postJoinClub,
   getLogout,
   postLoginPage,
+  getMessageCreate,
+  postMessageCreate,
 } from '../controllers/indexController.js';
 import { CustomNotFoundError } from '../errors.js';
 import { checkAuth, checkUnauth } from '../authMiddleware.js';
 
 const createIndexRouter = (): TypeRouter => {
   const indexRouter = Router();
+  indexRouter.post('/message/create', checkAuth, postMessageCreate);
+  indexRouter.get('/message/create', checkAuth, getMessageCreate);
 
   indexRouter.post('/join-club', checkAuth, postJoinClub);
   indexRouter.get('/join-club', checkAuth, getJoinClub);
 
   indexRouter.get('/log-out', checkAuth, getLogout);
+
   indexRouter.post('/log-in', checkUnauth, postLoginPage);
   indexRouter.get('/log-in', checkUnauth, getLoginPage);
 

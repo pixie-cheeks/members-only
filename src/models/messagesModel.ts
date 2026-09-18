@@ -5,7 +5,7 @@ interface MessageType {
   id: number;
   title: string;
   content: string;
-  timestamp: Date;
+  creation_time?: Date;
   user_id: number;
 }
 
@@ -14,7 +14,7 @@ interface UserMessageJoin {
   message_id: number;
   title: string;
   content: string;
-  timestamp: Date;
+  creation_time: Date;
   first_name: string;
   last_name: string;
   username: string;
@@ -40,7 +40,7 @@ class MessageModel extends BaseModel<MessageType> {
           messages.id AS message_id,
           messages.title,
           messages.content,
-          messages.timestamp,
+          messages.creation_time,
           users.first_name,
           users.last_name,
           users.username,

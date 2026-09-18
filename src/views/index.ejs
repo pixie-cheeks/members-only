@@ -23,8 +23,8 @@
     <% } %>
     <div class="card__body">
       <div class="card__content">
-        <% if (canSee) { %>
         <h2 class="card__title"><%= title %></h2>
+        <% if (canSee) { %>
         <p class="card__subtitle"><%=
         new Intl.DateTimeFormat("en-IN", {
           dateStyle: "medium",
@@ -33,16 +33,16 @@
         }).format(new Date())
       %></p>
         <% } %>
-        <p><%= content %></p>
+        <p class="card__text"><%= content %></p>
       </div>
+      <% if (isAdmin) { %>
       <div class="card__actions">
-        <% if (isAdmin) { %>
         <form action="/message/delete" method="POST">
           <input type="hidden" name="message_id" value="<%= message_id %>">
           <button type="submit" class="btn card__btn">Delete Message</button>
         </form>
-        <% } %>
       </div>
+      <% } %>
     </div>
   </li>
 

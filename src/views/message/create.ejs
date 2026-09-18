@@ -1,11 +1,19 @@
-<div style="max-width: 20rem; margin: 0 auto">
-  <h1>Create Message</h1><br>
-  <%- include('../partials/form-errors') %><br>
-  <form action="/message/create" method="POST">
-    Title: <br><input type="text" name="title"><br><br>
-    Content: <br><textarea name="content"></textarea><br><br>
+  <form action="/message/create" method="POST" class="form">
+    <%- include('../partials/form-errors') %><br>
+    <div class="form__container">
+      <h1 class="form__title">Create Message</h1>
 
-    <br><button type="submit">Submit</button>
+      <div class="form__field">
+        <label for="title">Title</label>
+        <input type="text" name="title" id="title" class="form__input">
+      </div>
+
+      <div class="form__field">
+        <label for="content">Content</label>
+        <textarea name="content" id="content" class="form__input form__input--textarea"></textarea>
+      </div>
+
+      <button type="submit" class="btn form__btn">Save Message</button>
+    </div>
 
   </form>
-</div>

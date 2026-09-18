@@ -58,8 +58,11 @@
   }
 
   &__subtitle {
-    margin-bottom: var(--space-4);
     font-size: var(--font-size-1);
+  }
+
+  &__text {
+    margin-top: var(--space-4);
   }
 
   &__actions {

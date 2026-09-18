@@ -1,10 +1,13 @@
+<% const canSee = locals.currentUser?.is_member || locals.currentUser?.is_admin %>
 <% if (locals.currentUser) { %>
-<% const {username, is_member} = currentUser; %>
+<% const {username, is_member, is_admin} = currentUser; %>
 <h1>Hello, <%= username %>!</h1>
 <% if (!is_member) { %>
 <a href="/join-club">Join the Club</a>
 <% } %>
+<% if (!is_admin) { %>
 <a href="/become-admin">Become Admin</a>
+<% } %>
 <a href="/log-out">Log Out</a>
 <a href="/message/create">Create a new message!</a>
 
@@ -13,4 +16,21 @@
 <a href="/sign-up">Sign Up</a>
 <a href="/log-in">Log In</a>
 
+<% } %>
+
+<% if (allMessages.length > 0) { %>
+<ul>
+  <% allMessages.forEach(({title, content, creation_time, first_name, last_name}) => { %>
+  <li>
+    <h2><%= title %></h2>
+    <% if (canSee) { %>
+    <p>Creation time: <%= new Date(creation_time).toLocaleString()  %></p>
+    <p><%= `${first_name} ${last_name}`  %></p>
+    <% } %>
+    <p><%= content %></p>
+  </li>
+
+  <% }) %>
+
+</ul>
 <% } %>

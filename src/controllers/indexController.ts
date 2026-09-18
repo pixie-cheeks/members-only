@@ -10,8 +10,14 @@ import { hashPassword, validatePassword } from '../libs/passwordUtilities.js';
 import { UnauthorizedError } from '../errors.js';
 import { messagesModel } from '../models/messagesModel.js';
 
-const getIndexPage = (_request: Request, response: Response): void => {
-  response.render('index', { title: 'Home' });
+const getIndexPage = async (
+  _request: Request,
+  response: Response,
+): Promise<void> => {
+  response.render('index', {
+    title: 'Home',
+    allMessages: await messagesModel.getAllMessagesWithUsers(),
+  });
 };
 
 const getSignupPage = (_request: Request, response: Response): void => {

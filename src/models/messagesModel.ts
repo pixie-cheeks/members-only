@@ -46,7 +46,7 @@ class MessageModel extends BaseModel<MessageType> {
           users.username,
           users.password,
           users.is_member,
-          users.is_admin,
+          users.is_admin
         FROM
           users,
           messages
@@ -58,6 +58,30 @@ class MessageModel extends BaseModel<MessageType> {
     );
 
     return rows.at(0);
+  }
+
+  async getAllMessagesWithUsers(): Promise<UserMessageJoin[]> {
+    const { rows } = await this.pool.query<UserMessageJoin>(/* sql */ `
+      SELECT
+        users.id AS user_id,
+        messages.id AS message_id,
+        messages.title,
+        messages.content,
+        messages.creation_time,
+        users.first_name,
+        users.last_name,
+        users.username,
+        users.password,
+        users.is_member,
+        users.is_admin
+      FROM
+        users,
+        messages
+      WHERE
+        users.id = messages.user_id;
+    `);
+
+    return rows;
   }
 }
 

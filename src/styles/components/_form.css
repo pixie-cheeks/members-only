@@ -89,4 +89,8 @@
   &__icon {
     flex: 0 0 auto;
   }
+
+  &__help-text {
+    margin-top: var(--space-6);
+  }
 }

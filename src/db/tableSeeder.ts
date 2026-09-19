@@ -10,8 +10,8 @@ const delay = (delayInMS: number): Promise<undefined> =>
 
 const tableOrderArray = [
   new BaseModel(pool, 'sessions'),
-  usersModel,
   messagesModel,
+  usersModel,
 ];
 
 const resetTables = (): Promise<undefined[]> =>

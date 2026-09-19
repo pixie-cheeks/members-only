@@ -1,7 +1,7 @@
 name: Update Render Status Badge
 on:
-  # schedule:
-  #   - cron: '*/5 * * * *' # Runs every 5 minutes
+  schedule:
+    - cron: '*/5 * * * *' # Runs every 5 minutes
   workflow_dispatch:
 
 permissions:

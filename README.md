@@ -2,7 +2,7 @@
 
 <!-- RENDER_BADGE_START -->
 
-RENDER_BADGE_HERE
+![Render Status]()
 <!-- RENDER_BADGE_END -->
 
 [Live link ✨](https://members-only-g4w6.onrender.com/)

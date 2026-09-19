@@ -12,7 +12,7 @@ class CustomError extends Error {
   }
 }
 
-class CustomNotFoundError extends CustomError {
+class NotFoundError extends CustomError {
   constructor(message: string) {
     super(message, 404, 'NotFoundError');
   }
@@ -48,4 +48,4 @@ const errorHandler = (
   }
 };
 
-export { CustomNotFoundError, UnauthorizedError, errorHandler };
+export { NotFoundError, UnauthorizedError, errorHandler };

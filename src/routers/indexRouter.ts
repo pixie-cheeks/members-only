@@ -19,7 +19,7 @@ import {
   postBecomeAdmin,
   deleteMessage,
 } from '../controllers/indexController.js';
-import { CustomNotFoundError } from '../errors.js';
+import { NotFoundError } from '../errors.js';
 import { checkAdmin, checkAuth, checkUnauth } from '../authMiddleware.js';
 
 const createIndexRouter = (): TypeRouter => {
@@ -45,7 +45,7 @@ const createIndexRouter = (): TypeRouter => {
 
   indexRouter.get('/', getIndexPage);
   indexRouter.get('/*all', (_request, _response, next) => {
-    next(new CustomNotFoundError('Page not found'));
+    next(new NotFoundError('Page not found'));
   });
 
   return indexRouter;

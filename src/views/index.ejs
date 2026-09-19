@@ -5,9 +5,9 @@
   <% if (locals.currentUser) { %>
   <h1 class="main__heading">Hello, <%= currentUser.username %>!</h1>
 
-  <a class="btn" href="/message/create">Create a new message!</a>
+  <a class="btn main__btn" href="/message/create">&plus; Add Message</a>
   <% } else { %>
-  <h1 class="main__heading">Hello World!</h1>
+  <h1 class="main__heading">Hello person!</h1>
   <% } %>
 </div>
 
@@ -17,8 +17,11 @@
   <li class="card">
     <% if (canSee) { %>
     <div class="card__author">
-      <p class="card__username"><%= username %></p>
-      <p class="card__name"><%= `${first_name} ${last_name}`  %></p>
+      <div class="card__media-like"><%= first_name.charAt(0) %></div>
+      <div class="card__name-stuff">
+        <p class="card__username"><%= username %></p>
+        <p class="card__name"><%= `${first_name} ${last_name}`  %></p>
+      </div>
     </div>
     <% } %>
     <div class="card__body">
@@ -50,5 +53,13 @@
 
 </ul>
 <% } else { %>
-
+<div class="main__content">
+  <!-- <img src="/images/empty-state.webp" alt="" class="main__media"> -->
+  <div class="main__empty-text">
+    <p class="main__subtitle">Wow! Seems like nobody has added a message yet.</p>
+  </div>
+  <% if (locals.currentUser) { %>
+  <a href="/message/create" class="main__btn btn">Add a Message</a>
+  <% } %>
+</div>
 <% }%>

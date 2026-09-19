@@ -1,7 +1,7 @@
 .card {
   display: flex;
+  flex-direction: column;
   gap: var(--space-6);
-  align-items: baseline;
   transition: var(--time-1) ease-in-out;
   transition-property: color, background-color;
   border-radius: var(--border-radius);
@@ -17,24 +17,53 @@
     object-fit: cover;
   }
 
+  &__media-like {
+    display: flex;
+    align-items: center;
+    align-self: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: var(--header-fg);
+    aspect-ratio: 1;
+    width: var(--space-7);
+    color: var(--header-bg);
+    font-size: var(--font-size-6);
+    font-weight: var(--font-weight-bold);
+  }
+
   &__author {
-    align-self: start;
-    width: var(--space-9);
+    display: flex;
+    flex-grow: 0;
+    gap: var(--space-4);
+    border-bottom: 1px solid;
+    padding-bottom: var(--space-4);
     text-align: center;
     font-size: var(--font-size-2);
+
+    @media (--for-tablet-portrait-up) {
+      flex-direction: column;
+      border: none;
+      padding: 0;
+    }
   }
 
   &__body {
+    display: flex;
     flex: 1;
+    flex-direction: column;
+    gap: var(--space-6);
 
     @media (--for-tablet-portrait-up) {
-      display: flex;
-      gap: var(--space-6);
+      flex-direction: row;
     }
   }
 
   &__name {
     font-size: var(--font-size-3);
+  }
+
+  &__username {
+    font-weight: var(--font-weight-bold);
   }
 
   &__name,
@@ -51,7 +80,7 @@
   &__title {
     letter-spacing: var(--letter-spacing-1);
     font-size: var(--font-size-6);
-    font-weight: normal;
+    font-weight: var(--font-weight-bold);
   }
 
   &__subtitle {
@@ -75,5 +104,10 @@
     &:focus {
       background-color: var(--card-btn-hover-bg);
     }
+  }
+
+  @media (--for-tablet-portrait-up) {
+    flex-direction: row;
+    align-items: baseline;
   }
 }

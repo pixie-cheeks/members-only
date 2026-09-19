@@ -66,9 +66,13 @@
     font-weight: var(--font-weight-bold);
   }
 
+  &__name-stuff {
+    width: var(--space-9);
+  }
+
   &__name,
   &__username {
-    max-width: 20ch;
+    max-width: var(--space-9);
     overflow: hidden;
     text-overflow: ellipsis;
   }
